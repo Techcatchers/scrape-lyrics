@@ -1,8 +1,5 @@
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from xml.dom import minidom
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,7 +12,7 @@ def lyrics_generator(song_name):
         options.add_argument('window-size=1200x600')
 
         browser = webdriver.Chrome(
-            r'C:\Users\Rishabh-Pc\Downloads\chromedriver', chrome_options=options)
+            r'Enter your chromedriver PATH here', chrome_options=options)
 
         s = "https://www.google.co.in/search?q=" + song_name + "%20genius%20lyrics"
         # s = "https://genius.com/Hailee-steinfeld-and-alesso-let-me-go-lyrics"
@@ -27,9 +24,7 @@ def lyrics_generator(song_name):
         browser.quit()
 
         page = requests.get(sear)
-        # print(page)
         soup = BeautifulSoup(page.content, 'html.parser')
-        # print(soup.get_text().encode('utf-8'))
         extract = soup.select(".lyrics")
         lyrics = (extract[0].get_text()).strip()
 
@@ -45,7 +40,6 @@ def lyrics_generator(song_name):
             browser = webdriver.Chrome(
                 r'C:\Users\Rishabh-Pc\Downloads\chromedriver', chrome_options=options)
             mystr = song_name
-            # print(mystr)
             s = "https://www.musixmatch.com/"
             browser.get(s)
             time.sleep(2)
@@ -64,8 +58,6 @@ def lyrics_generator(song_name):
                 '//*[@id="site"]/div/div[1]/div/main/div/div[1]/div[2]/div/div/div/div[1]/div/span/span/span[2]/div/div/div/div[1]/div[2]/div/ul/li/a/div[2]')
             mysearch.click()
             time.sleep(2)
-
-            # browser.get_screenshot_as_file('main-page.png')
 
             ele = browser.find_elements_by_class_name('mxm-lyrics__content ')
             lyrics = ''
